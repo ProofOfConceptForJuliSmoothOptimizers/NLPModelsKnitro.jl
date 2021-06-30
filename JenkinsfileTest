@@ -1,0 +1,19 @@
+pipeline {
+  agent any
+  stages {
+    stage ('Testing Stage') {
+        steps {
+          sh "mkdir -p $HOME/tests/NLPModelsKnitro"
+          sh "qsub -N NLPModelsKnitroUnitTest -V -cwd -o $HOME/tests/NLPModelsKnitro/${BRANCH_NAME}_output.log -e $HOME/tests/NLPModelsKnitro/${BRANCH_NAME}_error.log run_tests.sh"       
+        }
+    }
+  }
+  post {
+    success {
+      echo "SUCCESS!"  
+    }
+    cleanup {
+      sh 'printenv'
+    }
+  }
+}
