@@ -8,7 +8,7 @@ pipeline {
     stage ('Testing Stage') {
       steps {
         sh """
-          julia -E 'using Pkg; Pkg.activate(joinpath('~', "tests", "NLPModelsKnitro")); Pkg.add("NLPModelsKnitro"); Pkg.build("NLPModelsKnitro"); Pkg.test("NLPModelsKnitro")' &> test_results.log
+          julia -E 'using Pkg; Pkg.activate(joinpath('~', "tests", "NLPModelsKnitro")); Pkg.add("NLPModelsKnitro"); Pkg.build("NLPModelsKnitro"); Pkg.test("NLPModelsKnitro")' //&> test_results.log
         """
       }
     }
