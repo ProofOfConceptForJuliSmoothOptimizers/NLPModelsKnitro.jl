@@ -14,9 +14,8 @@ pipeline {
     }
     stage ('Create Gist') {
       steps {
-        sh """
-        gist_url=${curl -H 'Authorization: token ${GITHUB_AUTH}' -X POST -d '{"public":true,"files":{"test_results.log":{"content":"$(cat test_results.log)"}}}' https://api.github.com/gists | python3 -c "import sys, json; print(json.load(sys.sdin)['url']"}
-        """
+        sh """test_results_content="cat test_results.log" """
+        sh """gist_url=curl -H 'Authorization: token $GITHUB_AUTH' -X POST -d '{"public":true,"files":{"test_results.log":{"content":"eval $test_results_content"}}}' https://api.github.com/gists | python3 -c "import sys, json; print(json.load(sys.sdin)['url']")"""
       }
     }
     stage ('Write Comment') {
@@ -24,7 +23,7 @@ pipeline {
         script {
           env.PR_NUMBER = env.BRANCH_NAME.tokenize('PR-')[0]
         }
-        sh "curl -H "Authorization: token ${GITHUB_AUTH}" -X POST -d '{"body": "Here are the test results: $gist_url"}'"
+        sh """curl -H 'Authorization: token $GITHUB_AUTH' -X POST -d '{"body": "Here are the test results: $gist_url"}'"""
       }
     }
   }
