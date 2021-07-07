@@ -12,13 +12,13 @@ pipeline {
           echo "this is a test" > test_results.txt
           cat test_results.txt
         """
+        script {
+          def test_results_content = readFile(file: 'test_results.txt')
+        }
       }
     }
     stage ('Create Gist') {
       steps {
-        script {
-          def test_results_content = readFile(file: 'test_results.txt')
-        }
         sh """gist_url=curl -H 'Authorization: token $GITHUB_AUTH' -X POST -d '{"public":true,"files":{"test_results.log":{"content":"$test_results_content"}}}' https://api.github.com/gists | python3 -c "import sys, json; print(json.load(sys.sdin)['url'])" """
       }
     }
