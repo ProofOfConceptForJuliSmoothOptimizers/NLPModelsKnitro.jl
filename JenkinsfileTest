@@ -9,7 +9,6 @@ pipeline {
       steps {
         sh """
           pwd
-          // julia -E 'using Pkg; Pkg.activate(joinpath("tests", "NLPModelsKnitro")); Pkg.add("NLPModelsKnitro"); Pkg.build("NLPModelsKnitro"); Pkg.test("NLPModelsKnitro")' &> test_results.log
           echo "this is a test" > test_results.txt
           cat test_results.txt
         """
