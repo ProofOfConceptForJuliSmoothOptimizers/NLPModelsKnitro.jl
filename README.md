@@ -9,5 +9,3 @@
 [![](https://img.shields.io/badge/docs-dev-blue.svg)](https://JuliaSmoothOptimizers.github.io/NLPModelsKnitro.jl/dev)
 
 A thin KNITRO wrapper for NLPModels.
-
-<!-- this line has been added for no particular reason.  -->

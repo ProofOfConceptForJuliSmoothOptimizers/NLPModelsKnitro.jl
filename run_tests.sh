@@ -1,3 +1,3 @@
 #!/bin/bash
 
-julia -E 'using Pkg; Pkg.activate(joinpath("~", "tests", "NLPModelsKnitro")); Pkg.add("NLPModelKnitro"); Pkg.build("NLPModelKnitro"); Pkg.test("NLPModelKnitro")' > test_results.log
+julia -E 'using Pkg; Pkg.activate(joinpath("~", "tests", "NLPModelsKnitro")); Pkg.add("NLPModelsKnitro"); Pkg.build("NLPModelsKnitro"); Pkg.test("NLPModelsKnitro")'
