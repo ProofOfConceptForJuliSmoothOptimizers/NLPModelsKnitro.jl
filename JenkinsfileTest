@@ -1,11 +1,28 @@
 pipeline {
   agent any
+  environment {
+    REPO_NAME = "NLPModelsKnitro.jl"
+    OWNER = " ProofOfConceptForJuliSmoothOptimizers"
+  }
   stages {
     stage ('Testing Stage') {
-        steps {
-          sh "mkdir -p $HOME/tests/NLPModelsKnitro"
-          sh "qsub -N NLPModelsKnitroUnitTest -V -cwd -o $HOME/tests/NLPModelsKnitro/${BRANCH_NAME}_output.log -e $HOME/tests/NLPModelsKnitro/${BRANCH_NAME}_error.log run_tests.sh"       
+      steps {
+        sh "julia -E 'using Pkg; Pkg.activate(joinpath("~", "tests", "NLPModelsKnitro")); Pkg.add("NLPModelsKnitro"); Pkg.build("NLPModelsKnitro"); Pkg.test("NLPModelsKnitro")' &> test_results.log"
+      }
+    }
+    stage ('Create Gist') {
+      steps {
+        sh "gist_url=$(curl -H "Authorization: token ${GITHUB_AUTH}"-X POST -d '{"public":true,"files":{"test_results.log":{"content":"$(cat test_results.log)"}}}' https://api.github.com/gists | \
+            python3 -c "import sys, json; print(json.load(sys.sdin)['url']")"
+      }
+    }
+    stage ('Write Comment') {
+      steps {
+        script {
+          env.PR_NUMBER = env.BRANCH_NAME.tokenize('PR-')[0]
         }
+        sh "curl -H "Authorization: token ${GITHUB_AUTH}" -X POST -d '{"body": "Here are the test results: $gist_url"}'"
+      }
     }
   }
   post {
@@ -14,6 +31,8 @@ pipeline {
     }
     cleanup {
       sh 'printenv'
+      sh 'git reset --hard'
+      sh 'git clean -fd'
     }
   }
 }
