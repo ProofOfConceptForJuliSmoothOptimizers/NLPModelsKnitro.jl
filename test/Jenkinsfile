@@ -12,8 +12,8 @@ pipeline {
       steps {
         sh """
           pwd
-          julia -E 'using Pkg; Pkg.activate(joinpath("temp_env", "NLPModelsKnitro")); Pkg.add("NLPModelsKnitro"); Pkg.build("NLPModelsKnitro"); Pkg.test("NLPModelsKnitro")' &> test_results.log
-          cat test_results.log
+          julia -E 'using Pkg; Pkg.activate(joinpath("temp_env", "NLPModelsKnitro")); Pkg.add("NLPModelsKnitro"); Pkg.build("NLPModelsKnitro"); Pkg.test("NLPModelsKnitro")' &> test_results.txt
+          cat test_results.txt
         """
       }
     }

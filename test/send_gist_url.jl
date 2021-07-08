@@ -5,7 +5,7 @@ Pkg.instantiate()
 
 using Git, GitHub
 
-TEST_RESULTS_FILE = "test_results.log"
+TEST_RESULTS_FILE = "test_results.txt"
 
 # Need to add GITHUB_AUTH to your .bashrc
 myauth = GitHub.authenticate(ENV["GITHUB_AUTH"])
