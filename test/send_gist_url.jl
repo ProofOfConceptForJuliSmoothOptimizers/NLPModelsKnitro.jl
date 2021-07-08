@@ -1,9 +1,9 @@
 using Pkg
 Pkg.activate(joinpath("temp_env"))
-Pkg.add(["Git", "GitHub"])
+Pkg.add(["Git", "GitHub", "JSON"])
 Pkg.instantiate()
 
-using Git, GitHub
+using Git, GitHub, JSON
 
 TEST_RESULTS_FILE = "test_results.txt"
 
@@ -11,12 +11,12 @@ TEST_RESULTS_FILE = "test_results.txt"
 myauth = GitHub.authenticate(ENV["GITHUB_AUTH"])
 
 function create_gist(authentication)
-    gistfile = TEST_RESULTS_FILE
-    gist = begin
-        open(gistfile, "r") do f
-            return readlines(f)
-        end
-    end
+    file = open(TEST_RESULTS_FILE, 'r')
+
+    gist = Dict{String,Any}("description" => "Test results",
+                             "public" => true,
+                             "files" => Dict("content" => readlines(file)))
+    
     posted_gist = GitHub.create_gist(params = gist, auth = authentication)
 
     return posted_gist
