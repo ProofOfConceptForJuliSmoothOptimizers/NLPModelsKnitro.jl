@@ -11,11 +11,13 @@ TEST_RESULTS_FILE = "test_results.txt"
 myauth = GitHub.authenticate(ENV["GITHUB_AUTH"])
 
 function create_gist(authentication)
-    file = open(TEST_RESULTS_FILE, 'r')
+    file = open(TEST_RESULTS_FILE, "r")
 
     gist = Dict{String,Any}("description" => "Test results",
                              "public" => true,
                              "files" => Dict("content" => readlines(file)))
+    
+    close(file)
     
     posted_gist = GitHub.create_gist(params = gist, auth = authentication)
 
