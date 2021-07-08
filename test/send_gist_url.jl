@@ -14,7 +14,7 @@ function create_gist(authentication)
     gistfile = TEST_RESULTS_FILE
     gist = begin
         open(gistfile, "r") do f
-            return println(f)
+            return println(readlines(f))
         end
     end
     posted_gist = create_gist(params = gist, auth = authentication)
