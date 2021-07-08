@@ -1,0 +1,36 @@
+def test_results_content = ''
+def gist_url = ''
+pipeline {
+  agent any
+  environment {
+    REPO_NAME = "NLPModelsKnitro.jl"
+    OWNER = "ProofOfConceptForJuliSmoothOptimizers"
+    PR_NUMBER = "${BRANCH_NAME.tokenize('PR-')[0]}"
+  }
+  stages {
+    stage ('Testing Stage') {
+      steps {
+        sh """
+          pwd
+          julia -E 'using Pkg; Pkg.activate(joinpath("temp_env", "NLPModelsKnitro")); Pkg.add("NLPModelsKnitro"); Pkg.build("NLPModelsKnitro"); Pkg.test("NLPModelsKnitro")' &> test_results.log
+          cat test_results.log
+        """
+      }
+    }
+    stage ('Write Comment') {
+      steps {
+        sh """julia test/send_gist_url.jl"""
+      }
+    }
+  }
+  post {
+    success {
+      echo "SUCCESS!"  
+    }
+    cleanup {
+      sh 'printenv'
+      sh 'git reset --hard'
+      sh 'git clean -fd'
+    }
+  }
+}
