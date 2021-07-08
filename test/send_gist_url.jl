@@ -17,7 +17,7 @@ function create_gist(authentication)
             return println(readlines(f))
         end
     end
-    posted_gist = create_gist(params = gist, auth = authentication)
+    posted_gist = GitHub.create_gist(params = gist, auth = authentication)
 
     return posted_gist
 end
