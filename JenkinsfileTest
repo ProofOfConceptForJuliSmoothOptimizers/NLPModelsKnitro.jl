@@ -20,7 +20,7 @@ pipeline {
         script {
           test_results_content = readFile(file: 'test_results.log')
         }
-        sh """gist_url=curl -H 'Authorization: token $GITHUB_AUTH' -X POST -d '{"public":true,"files":{"test_results.log":{"content":"$test_results_content"}}}' https://api.github.com/gists | python3 -c "import sys, json; print(json.load(args[1])['url'])" """
+        sh """gist_url=curl -H 'Authorization: token $GITHUB_AUTH' -X POST -d '{"public":true,"files":{"test_results.log":{"content":"$test_results_content"}}}' https://api.github.com/gists | python3 -c "import sys, json; obj=json.load(sys.stdin); print(obj["url"])" """
       }
     }
     stage ('Write Comment') {
