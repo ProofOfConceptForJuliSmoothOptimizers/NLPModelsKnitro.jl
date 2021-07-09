@@ -60,7 +60,8 @@ pipeline {
     stage('run tests') {
       steps {
         sh "pwd"
-        sh "ls -la" 
+        sh "ls -la"
+        sh "chmod +x ./run_test.sh"
         sh "./run_test.sh"  
       }
     }
@@ -70,13 +71,11 @@ pipeline {
       echo "SUCCESS!"  
     }
     cleanup {
-      dir(WORKSPACE + "/$repo") {
-        sh 'printenv'
-        sh '''
-        git clean -fd
-        git checkout master
-        '''
-      }
+      sh 'printenv'
+      sh '''
+      git clean -fd
+      git checkout master
+      '''
     }
   }
 }
