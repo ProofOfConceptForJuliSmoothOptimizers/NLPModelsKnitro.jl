@@ -11,7 +11,9 @@ pipeline {
     stage ('Testing Stage') {
       steps {
         sh """
-          echo allo! > test_results.txt
+          pwd
+          julia -E 'using Pkg; Pkg.activate(joinpath("temp_env", "NLPModelsKnitro")); Pkg.add("NLPModelsKnitro"); Pkg.build("NLPModelsKnitro"); Pkg.test("NLPModelsKnitro")' &> test_results.txt
+          cat test_results.txt
         """
       }
     }
