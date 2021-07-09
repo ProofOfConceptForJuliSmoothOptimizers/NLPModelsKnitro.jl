@@ -9,7 +9,7 @@ TEST_RESULTS_FILE = "test_results.txt"
 TEST_RESULTS_JSON = "test_results.json"
 
 # Need to add GITHUB_AUTH to your .bashrc
-myauth = GitHub.authenticate(ENV["JSO_GITHUB_AUTH"])
+myauth = GitHub.authenticate(ENV["GITHUB_AUTH"])
 
 function create_gist(authentication)
     file = open(TEST_RESULTS_FILE, "r")
