@@ -1,8 +1,5 @@
 pipeline {
   agent any
-  environment {
-    REPO_EXISTS = fileExists "$repo"
-  }
   options {
     skipDefaultCheckout false
   }
@@ -62,6 +59,8 @@ pipeline {
   stages {
     stage('run tests') {
       steps {
+        sh "pwd"
+        sh "ls -la" 
         sh "./run_test.sh"  
       }
     }
