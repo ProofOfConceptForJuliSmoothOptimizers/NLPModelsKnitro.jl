@@ -43,7 +43,7 @@ pipeline {
         ]
      ],
 
-     causeString: 'Triggered on push',
+     causeString: 'Triggered on comment',
 
      token: "NLPModelsKnitroTest",
 
@@ -52,8 +52,8 @@ pipeline {
 
      silentResponse: false,
 
-     regexpFilterText: '',
-     regexpFilterExpression: ''
+     regexpFilterText: '$comment',
+     regexpFilterExpression: '@JSOBot runtests'
     )
   }
   stages {
