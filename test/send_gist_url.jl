@@ -50,4 +50,4 @@ function get_pull_request(api::GitHub.GitHubWebAPI, org::String, repo::Repo, pul
     return pull_request
 end
 
-post_gist_url_to_pr("Here are the test results: $(create_gist(myauth).html_url)")
+post_gist_url_to_pr("Here are the test results: $(create_gist(myauth).html_url)"; auth = myauth)
