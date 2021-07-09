@@ -15,11 +15,11 @@ function create_gist(authentication)
     file = open(TEST_RESULTS_FILE, "r")
     file_dict = Dict(TEST_RESULTS_FILE => Dict("content" => readlines(file)))
     close(file)
-    gist = JSON.parse(Dict{String,Any}("description" => "Test results",
+    gist = Dict{String,Any}("description" => "Test results",
                              "public" => true,
-                             "files" => file_dict))
+                             "files" => file_dict)
     
-    posted_gist = GitHub.create_gist(params = TEST_RESULTS_JSON, auth = authentication)
+    posted_gist = GitHub.create_gist(params = gist, auth = authentication)
 
     return posted_gist
 end
