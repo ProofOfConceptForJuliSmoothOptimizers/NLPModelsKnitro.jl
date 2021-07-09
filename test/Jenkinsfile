@@ -61,7 +61,7 @@ pipeline {
       steps {
         sh "pwd"
         sh "ls -la"
-        sh "chmod +x ./run_test.sh"
+        sh "chmod +x run_tests.sh"
         sh "./run_test.sh"  
       }
     }
