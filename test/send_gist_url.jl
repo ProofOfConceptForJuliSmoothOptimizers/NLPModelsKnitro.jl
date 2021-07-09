@@ -16,7 +16,7 @@ function create_gist(authentication)
     file_content = ""
     file = open(TEST_RESULTS_FILE, "r")
     for line in readlines(file)
-        global file_content *= line*'\n'
+        file_content *= line*'\n'
     end
     close(file)
     
