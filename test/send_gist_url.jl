@@ -32,7 +32,7 @@ end
 function post_gist_url_to_pr(comment::String; kwargs...)
     api = GitHub.DEFAULT_API
     repo = get_repo(api, ENV["OWNER"], ENV["REPO_NAME"]; kwargs...)
-    pull_request = get_pull_request(api, ENV["OWNER"], repo, Int(ENV["PR_NUMBER"]); kwargs...)
+    pull_request = get_pull_request(api, ENV["OWNER"], repo, parse(Int, ENV["PR_NUMBER"]); kwargs...)
     GitHub.create_comment(api, repo, pull_request, comment; kwargs...)
 end
 
