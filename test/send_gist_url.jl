@@ -12,9 +12,14 @@ TEST_RESULTS_JSON = "test_results.json"
 myauth = GitHub.authenticate(ENV["GITHUB_AUTH"])
 
 function create_gist(authentication)
-    file = open(TEST_RESULTS_FILE, "r")
-    file_dict = Dict(TEST_RESULTS_FILE => Dict("content" => readlines(file)))
-    close(file)
+    
+    file_content = begin
+            open(TEST_RESULTS_FILE, "r") do file
+            return "$([println(line for line ∈ readlines(file))])"
+        end
+    end
+
+    file_dict = Dict(TEST_RESULTS_FILE => Dict("content" => file_content))
     gist = Dict{String,Any}("description" => "Test results",
                              "public" => true,
                              "files" => file_dict)
