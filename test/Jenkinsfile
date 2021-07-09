@@ -73,7 +73,6 @@ pipeline {
       sh '''
       git clean -fd
       git reset --hard
-      git checkout master
       '''
     }
   }
