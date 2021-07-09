@@ -36,6 +36,12 @@ function post_gist_url_to_pr(comment::String; kwargs...)
     GitHub.create_comment(api, repo, pull_request, comment; kwargs...)
 end
 
+function get_repo(api::GitHub.GitHubWebAPI, org::String, repo_name::String; kwargs...)
+    my_params = Dict(:visibility => "all")
+    # return GitHub.repo(api, repo; params = my_params, kwargs...)
+    return Repo(GitHub.gh_get_json(api, "/repos/$(org)/$(repo_name)"; params = my_params, kwargs...))
+end
+
 function get_pull_request(api::GitHub.GitHubWebAPI, org::String, repo::Repo, pullrequest_id; kwargs...)
     my_params = Dict(:sort => "popularity",
                     :direction => "desc")
