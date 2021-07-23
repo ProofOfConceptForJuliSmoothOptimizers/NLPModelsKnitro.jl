@@ -28,10 +28,10 @@ function create_gist(authentication)
 end
 
 function post_gist_url_to_pr(comment::String; kwargs...)
-    api = GitHub.DEFAULT_API
-    repo = get_repo(api, ORG, REPO; kwargs...)
-    pull_request = get_pull_request(api, ORG, repo, parse(Int, PR); kwargs...)
-    GitHub.create_comment(api, repo, pull_request, comment; kwargs...)
+  api = GitHub.DEFAULT_API
+  repo = get_repo(api, ORG, REPO; kwargs...)
+  pull_request = get_pull_request(api, ORG, repo, parse(Int, PR); kwargs...)
+  GitHub.create_comment(api, repo, pull_request, comment; kwargs...)
 end
 
 function get_repo(api::GitHub.GitHubWebAPI, org::String, repo_name::String; kwargs...)
@@ -61,15 +61,15 @@ function get_pull_request(
 end
 
 function get_comment_from_test_results()
-    open(TEST_RESULTS_FILE, "r") do file
-        text_to_match = r"tests passed"
-        for line in readlines(file)
-            if occursin(text_to_match, line)
-                return "$(strip(line)): "
-            end
-        end
-        return "Tests failed: "
+  open(TEST_RESULTS_FILE, "r") do file
+    text_to_match = r"tests passed"
+    for line in readlines(file)
+      if occursin(text_to_match, line)
+        return "$(strip(line)): "
+      end
     end
+    return "Tests failed: "
+  end
 end
 
 comment = get_comment_from_test_results()
